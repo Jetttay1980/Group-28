@@ -2,12 +2,24 @@ version: '3.9'
 
 services:
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
     container_name: web
     ports:
       - "3000:3000"
     depends_on:
       - mongo
+    networks:
+      - backend
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: frontend
+    ports:
+      - "80:80"
     networks:
       - backend
 
@@ -48,7 +60,7 @@ services:
     ports:
       - "443:443"
     depends_on:
-      - web
+      - frontend
     networks:
       - backend
 
