@@ -40,8 +40,15 @@ const arr = [
     },
 
 ]
-
-
+// Calls seedDB function once mongoDB connects successfully. else throws error to console. 
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log("MongoDB connected");
+        seedDB(); // Call the seedDB function to insert data
+    })
+    .catch(err => {
+        console.error("MongoDB connection error:", err);
+    });
 
 function seedDB() {
     
@@ -56,12 +63,3 @@ function seedDB() {
 }
 
 module.exports = seedDB;
-
-mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => {
-        console.log("MongoDB connected");
-        seedDB(); // Call the seedDB function to insert data
-    })
-    .catch(err => {
-        console.error("MongoDB connection error:", err);
-    });

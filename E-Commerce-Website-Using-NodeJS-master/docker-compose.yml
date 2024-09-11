@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile.backend
     container_name: web
+    environment:
+      MONGO_URL: mongodb://admin:pass@mongo:27017/shopping-cart?authSource=admin
     ports:
       - "3000:3000"
     depends_on:
