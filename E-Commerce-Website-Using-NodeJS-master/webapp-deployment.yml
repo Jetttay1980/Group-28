@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+  labels:
+    app: webapp
+spec:
+  replicas: 1  # You can increase this if you want more replicas of your app
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp-backend
+        image: e-commerce-website-using-nodejs-master-web
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+      - name: webapp-frontend
+        image: e-commerce-website-using-nodejs-master-frontend
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
