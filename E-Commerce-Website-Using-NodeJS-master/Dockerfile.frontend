@@ -1,9 +1,11 @@
 # Dockerfile.frontend
-# Use an official Nginx image
+
+# FROM specifies the base image, here we are using an offical Nginx image. 
+# Apline claims to make containers smaller and more efficient.
 FROM nginx:alpine
 
-# Copy static files to Nginx web directory
+# Copy static files from 'public' directory to Nginx web directory
 COPY public /usr/share/nginx/html
 
-# Expose port 80
+# Container will listen on 80 which is the default HTTP port
 EXPOSE 80
