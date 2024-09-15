@@ -1,21 +1,24 @@
 # Dockerfile.backend
-# Use the official Node.js image
+
+# FROM specifies the base image for the container.
+# The offical node.js 18 image has been used which has everything needed to run Node.js apps. Including Node and npm (the package manager).
 FROM node:18
 
-# Set the working directory
+# WORKDIR sets the working directory inside the container.
+# default file path for this container.
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
+# Copy package.json & package-lock.json from local filesystem into working directory
 COPY package*.json ./
 
-# Install dependencies
+# Install dependencies listed in package.json
 RUN npm install
 
-# Copy the rest of the application code
+# Copy the rest of the application code from local filesystem to working directory
 COPY . .
 
-# Expose the port the app runs on
+# The port the app will run on
 EXPOSE 3000
 
-# Start the app
+# Command to run when the container starts
 CMD ["node", "app.js"]
