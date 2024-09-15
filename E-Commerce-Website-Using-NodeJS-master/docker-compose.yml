@@ -3,27 +3,29 @@ version: '3.9'
 services:
   web:
     build:
-      context: .
-      dockerfile: Dockerfile.backend
+      context: . # directory of file
+      dockerfile: Dockerfile.backend # filename used to build container
     container_name: web
     environment:
-      MONGO_URL: mongodb://admin:pass@mongo:27017/shopping-cart?authSource=admin
+      MONGO_URL: mongodb://admin:pass@mongo:27017/shopping-cart?authSource=admin # configures mongoDB using credentials 'admin' and 'pass'
     ports:
-      - "3000:3000"
+      - "3000:3000" # the first 3000 is the port on host machine, enabling the app to be accessable though 'localhost:3000'
+      # the second 3000 is the port of the backend container, specified in Dockerfile.backend
     depends_on:
-      - mongo
+      - mongo # waits for mongoDB to be ready before running the container
     networks:
-      - backend
+      - backend # connects to backend network so it can interact with other services, such as mongoDB
 
   frontend:
     build:
-      context: .
-      dockerfile: Dockerfile.frontend
+      context: . # directory of file
+      dockerfile: Dockerfile.frontend # filename used to build container
     container_name: frontend
     ports:
-      - "8081:80"
+      - "8081:80" # maps frontend to port 8081 so the frontend can be accessable through 'localhost:8081'
+      # 80 is the default port for HTTP linking the container to the frontend container, specified in Dockerfile.frontend
     networks:
-      - backend
+      - backend # link backend for communication with other services.
 
   mongo:
     image: mongo:latest
